@@ -1,0 +1,61 @@
+import pygame
+pygame.init()
+#Inicio do programa
+right = 500
+left = 600
+char_walk = 15
+screen = pygame.display.set_mode((1080, 720))
+pygame.display.set_caption('Salve vidas')
+#Mapa do jogo
+backgrownd = pygame.image.load('C:/Users/Maryur/Documents/Aprendendo/Medical Game/Base_game.png')
+#Sprites do personagem
+class Sprites(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprites = []
+        self.sprites.append(pygame.image.load('C:/Users/Maryur/Documents/Aprendendo/Medical Game/Pegou_esquerda1.png'))
+        self.sprites.append(pygame.image.load('C:/Users/Maryur/Documents/Aprendendo/Medical Game/Pegou_esquerda2.png'))
+        self.sprites.append(pygame.image.load('C:/Users/Maryur/Documents/Aprendendo/Medical Game/Pegou_esquerda3.png'))
+        self.sprites.append(pygame.image.load('C:/Users/Maryur/Documents/Aprendendo/Medical Game/Pegou_esquerda4.png'))
+        self.atual = 0
+        self.image = self.sprites[self.atual]
+        self.rect = self.image.get_rect()
+        self.rect.topleft = 100,100
+        self.image = pygame.transform.scale(self.image,(128*3, 125*3))
+        
+    def update(self):
+        self.atual = self.atual + 0.5
+        if self.atual >= len(self.sprites):
+            self.atual = 0 
+        self.image = self.sprites[int(self.atual)]
+        self.image = pygame.transform.scale(self.image,(128*3, 125*3))
+
+todas_as_sprites = pygame.sprite.Group()
+boneco = Sprites()
+todas_as_sprites.add(boneco)
+
+#Teclas para Andar
+Inicio = True
+relogio = pygame.time.Clock()
+while Inicio :
+    relogio.tick(30)
+    pygame.time.delay(50)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+           Inicio = False
+    Teclas = pygame.key.get_pressed()
+    if Teclas [pygame.K_UP]:
+        left -= char_walk
+    if Teclas [pygame.K_DOWN]:
+        left += char_walk
+    if Teclas [pygame.K_LEFT]:
+        right -= char_walk
+    if Teclas [pygame.K_RIGHT]:
+        right += char_walk
+#Mapa do jogo
+    screen.blit(backgrownd, (0,0))
+    todas_as_sprites.draw(screen)
+    todas_as_sprites.update()
+    pygame.display.flip()
+#Sprite Andando
+pygame.quit()
